@@ -61,7 +61,7 @@ export default function Example() {
                 </div>
               </div>
               <a
-                className="block px-6 py-3 text-sm text-gray-50 hover:text-gray-200 font-bold border border-gray-100 hover:border-gray-200 rounded"
+                className="block px-6 py-3 text-sm  hover:text-gray-800 font-bold border border-gray-300 hover:border-gray-400 rounded"
                 href="#"
               >
                 Connect Wallet

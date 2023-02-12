@@ -54,7 +54,7 @@ interface TableProps {
 export default function Table({ rowData, relativeLink }: TableProps) {
   const handleSubmit = (value: any) => {
     console.log(value);
-    router.push(`/product/${value}`);
+    router.push(`/questions/${value}`);
   };
 
   return (
