@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import router from "next/router";
 
 const questions = [
   //Two Sum, Reverse String, Single Number, Longest Common Prefix, Search Insert Position
@@ -51,6 +52,11 @@ interface TableProps {
 }
 
 export default function Table({ rowData, relativeLink }: TableProps) {
+  const handleSubmit = (value: any) => {
+    console.log(value);
+    router.push(`/product/${value}`);
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 ">
       <div className="sm:flex sm:items-center">
@@ -116,6 +122,7 @@ export default function Table({ rowData, relativeLink }: TableProps) {
                         className={`hover:cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gray-50 duration-300  ${
                           questionIdx % 2 === 0 ? undefined : "bg-gray-100"
                         }`}
+                        onClick={() => handleSubmit(questionIdx)}
                       >
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium  sm:pl-6">
                           {question.number}
