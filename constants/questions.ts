@@ -9,11 +9,11 @@ export type QuestionId = "q1";
 
 const questions: { [key in QuestionId]: Question } = {
   q1: {
-    Title: "Two Sum",
+    Title: "Solid Snake",
     Description:
-      "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+      "Your task is to write a function that will take in a sequence of moves that Solid Snake makes in a two-dimensional grid, represented by a string containing 'U' for up, 'D' for down, 'L' for left, and 'R' for right. The function should return the final position of Solid Snake after performing all the given moves. Solid Snake starts at position (0, 0) in the grid. The grid is a rectangular shape, and has a width of w and a height of h. If Solid Snake moves out of the grid, the function should return None. Solid Snake cannot move through walls.",
     Example:
-      "Input: nums = [2,7,11,15], target = 9. Output: [0,1]. Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].",
+      "let result = final_position(5, 5, 'RUULDD'); assert_eq!(result, Some((2, 2)));",
     QuestionId: 1,
   },
 };

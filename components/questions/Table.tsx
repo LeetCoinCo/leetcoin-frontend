@@ -5,7 +5,7 @@ const questions = [
   //Two Sum, Reverse String, Single Number, Longest Common Prefix, Search Insert Position
   {
     number: 1,
-    title: "Two Sum",
+    title: "Solid Snake",
     difficulty: "Easy",
     frequency: 100,
     rating: 4,
@@ -13,7 +13,7 @@ const questions = [
   },
   {
     number: 2,
-    title: "Reverse String",
+    title: "Solidus Snake",
     difficulty: "Easy",
     frequency: 90,
     rating: 5,
@@ -21,7 +21,7 @@ const questions = [
   },
   {
     number: 3,
-    title: "Single Number",
+    title: "Liquid Solid Snake",
     difficulty: "Hard",
     frequency: 50,
     rating: 5,
@@ -29,7 +29,7 @@ const questions = [
   },
   {
     number: 4,
-    title: "Longest Common Prefix",
+    title: "Nomad Bridge",
     difficulty: "Med",
     frequency: 20,
     rating: 3,
@@ -37,7 +37,7 @@ const questions = [
   },
   {
     number: 5,
-    title: "Search Insert Position",
+    title: "Not So Smart Contract",
     difficulty: "Hard",
     frequency: 10,
     rating: 5,
