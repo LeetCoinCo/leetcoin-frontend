@@ -20,7 +20,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Table
-        colHeaders={["h1", "h2", "h3"]}
+        // colHeaders={["h1", "h2", "h3"]}
         relativeLink={`/questions/`}
         rowData={[1]}
       ></Table>

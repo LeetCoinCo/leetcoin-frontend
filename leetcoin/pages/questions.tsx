@@ -50,9 +50,9 @@ const Questions: NextPage = () => {
     <div className="">
       <Table
         relativeLink={`/products/`}
-        colHeaders={["te1", "te1", "tel1", "te1", "te1"]}
+        // colHeaders={["te1", "te1", "tel1", "te1", "te1"]}
         rowData={questions}
-        listOfLinks={["link1", "link2"]}
+        // listOfLinks={["link1", "link2"]}
       ></Table>
     </div>
   );

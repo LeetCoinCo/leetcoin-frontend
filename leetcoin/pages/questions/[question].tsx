@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getQuestion } from "../../constants/questions";
 
+import dynamic from "next/dynamic";
+const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+
 const Question = () => {
   const router = useRouter();
   // state
   const question = getQuestion("q1");
+  const [postBody, setPostBody] = React.useState("");
 
   return (
     <div className="container mx-auto ">
@@ -20,7 +24,35 @@ const Question = () => {
       </div>
       <div className=" mb-2">DropDown</div>
       <div className=" mb-5">Code Editor</div>
-
+      <div>
+        <MonacoEditor
+          editorDidMount={() => {
+            // @ts-ignore
+            window.MonacoEnvironment.getWorkerUrl = (
+              _moduleId: string,
+              label: string
+            ) => {
+              if (label === "json") return "_next/static/json.worker.js";
+              if (label === "css") return "_next/static/css.worker.js";
+              if (label === "html") return "_next/static/html.worker.js";
+              if (label === "typescript" || label === "javascript")
+                return "_next/static/ts.worker.js";
+              return "_next/static/editor.worker.js";
+            };
+          }}
+          width="800"
+          height="600"
+          language="markdown"
+          theme="vs-dark"
+          value={postBody}
+          options={{
+            minimap: {
+              enabled: false,
+            },
+          }}
+          onChange={setPostBody}
+        />
+      </div>
       <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4  border-orange-700 rounded">
         Submit
       </button>
