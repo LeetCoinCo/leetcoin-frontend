@@ -10,20 +10,13 @@ const Question = () => {
   const router = useRouter();
   // state
   const question = getQuestion("q1");
-  const [postBody, setPostBody] = React.useState("");
-  const [selectedLanguage, setSelectedLanguage] = React.useState("markdown");
-  const supportedLanguages = [
-    "markdown",
-    "javascript",
-    "typescript",
-    "html",
-    "css",
-    "json",
-    "rust",
-    "solidity",
-  ];
+  const [postBody, setPostBody] = React.useState(
+    "// SPDX-License-Identifier: MIT \n // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0 \n pragma solidity ^0.8.17; \n contract HelloWorld { \n string public greet = 'Hello World!'; \n}"
+  );
+  const [selectedLanguage, setSelectedLanguage] = React.useState("sol");
+  const supportedLanguages = ["sol"];
 
-  const handleLanguageChange = (e) => {
+  const handleLanguageChange = (e: any) => {
     setSelectedLanguage(e.target.value);
   };
 
@@ -75,6 +68,7 @@ const Question = () => {
               if (label === "css") return "_next/static/css.worker.js";
               if (label === "html") return "_next/static/html.worker.js";
               if (label === "rust") return "_next/static/rust.worker.js";
+              if (label === "sol") return "_next/static/sol.worker.js";
               if (label === "solidity")
                 return "_next/static/solidity.worker.js";
               if (label === "typescript" || label === "javascript")
