@@ -38,6 +38,7 @@ module.exports = withTM({
           "scss",
           "yaml",
           "rust",
+          "sol",
           "solidity",
         ],
         filename: "static/[name].worker.js",

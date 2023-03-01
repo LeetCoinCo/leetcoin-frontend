@@ -2,9 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Layout } from "../components/base/Layout";
-import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

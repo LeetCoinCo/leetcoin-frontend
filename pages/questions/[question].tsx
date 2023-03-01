@@ -23,7 +23,7 @@ const Question = () => {
     "solidity",
   ];
 
-  const handleLanguageChange = (e) => {
+  const handleLanguageChange = (e: any) => {
     setSelectedLanguage(e.target.value);
   };
 
