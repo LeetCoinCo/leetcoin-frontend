@@ -47,6 +47,7 @@ const Question = () => {
       setLoading(false);
       setShowTerminal(true);
       const result = "Hahahaha noob";
+      // @ts-ignore
       terminal?.write(result);
     }, 2000);
   };
