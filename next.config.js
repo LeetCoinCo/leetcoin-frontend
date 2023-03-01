@@ -8,7 +8,7 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 module.exports = withTM({
-  webpack: (config) => {
+  webpack: (config, options) => {
     const rule = config.module.rules
       .find((rule) => rule.oneOf)
       .oneOf.find(
@@ -23,27 +23,30 @@ module.exports = withTM({
         /[\\/]node_modules[\\/]monaco-editor[\\/]/,
       ];
     }
-
-    config.plugins.push(
-      new MonacoWebpackPlugin({
-        languages: [
-          "json",
-          "markdown",
-          "css",
-          "typescript",
-          "javascript",
-          "html",
-          "graphql",
-          "python",
-          "scss",
-          "yaml",
-          "rust",
-          "sol",
-          "solidity",
-        ],
-        filename: "static/[name].worker.js",
-      })
-    );
+    // when `isServer` is `true`, building (`next build`) fails with the following error:
+    // "Conflict: Multiple assets emit different content to the same filename ../main.js.nft.json"
+    if (!options.isServer) {
+      config.plugins.push(
+        new MonacoWebpackPlugin({
+          languages: [
+            "json",
+            "markdown",
+            "css",
+            "typescript",
+            "javascript",
+            "html",
+            "graphql",
+            "python",
+            "scss",
+            "yaml",
+            "rust",
+            "sol",
+            "solidity",
+          ],
+          filename: "static/[name].worker.js",
+        })
+      );
+    }
     return config;
   },
 });
