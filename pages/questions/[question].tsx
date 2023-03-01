@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getQuestion } from "../../constants/questions";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import dynamic from "next/dynamic";
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
