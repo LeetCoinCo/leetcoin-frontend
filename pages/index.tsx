@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Questions from "./questions";
-import Table from "../components/questions/Table";
+// import Image from "next/image";
+// import { Inter } from "@next/font/google";
+// import styles from "@/styles/Home.module.css";
+// import Questions from "./questions";
+// import Table from "../components/questions/Table";
 import Question from "../pages/questions/demo";
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (

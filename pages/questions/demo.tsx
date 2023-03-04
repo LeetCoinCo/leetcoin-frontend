@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getQuestion } from "../../constants/questions";
 import "xterm/css/xterm.css";
+import Editor from "@monaco-editor/react";
+
 
 import dynamic from "next/dynamic";
-const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+import * as monaco from "monaco-editor";
+// const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
 const Question = () => {
   // state
@@ -11,8 +14,15 @@ const Question = () => {
   const [postBody, setPostBody] = React.useState(
     "// SPDX-License-Identifier: MIT \n // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0 \n pragma solidity ^0.8.17; \n contract HelloWorld { \n string public greet = 'Hello World!'; \n}"
   );
+
+  const callbackPostBody = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+    if (value) {
+      setPostBody(value);
+    }
+  }
+
   const [selectedLanguage, setSelectedLanguage] = React.useState("sol");
-  const supportedLanguages = ["sol"];
+  const supportedLanguages = ["sol", "javascript", "typescript", "html", "css", "json", "rust", "markdown"];
   const [terminal, setTerminal] = useState(null);
   const [showTerminal, setShowTerminal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -88,43 +98,53 @@ const Question = () => {
       </div>
 
       <div className="mt-4 flex">
-        {showContent && (
-          <div className="absolute inset-0 bg-white z-50">
-            <div className="animate-pulse bg-gray-200 w-full h-full z-50"></div>
-          </div>
-        )}
-        <MonacoEditor
-          editorDidMount={() => {
-            setShowContent(false);
-            // @ts-ignore
-            window.MonacoEnvironment.getWorkerUrl = (
-              _moduleId: string,
-              label: string
-            ) => {
-              if (label === "json") return "_next/static/json.worker.js";
-              if (label === "css") return "_next/static/css.worker.js";
-              if (label === "html") return "_next/static/html.worker.js";
-              if (label === "rust") return "_next/static/rust.worker.js";
-              if (label === "sol") return "_next/static/sol.worker.js";
-              if (label === "solidity")
-                return "_next/static/solidity.worker.js";
-              if (label === "typescript" || label === "javascript")
-                return "_next/static/ts.worker.js";
-              return "_next/static/editor.worker.js";
-            };
-          }}
-          width="1000"
-          height="600"
-          language={selectedLanguage}
+      {/*  {showContent && (*/}
+      {/*    <div className="absolute inset-0 bg-white z-50">*/}
+      {/*      <div className="animate-pulse bg-gray-200 w-full h-full z-50"></div>*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+        {/*<MonacoEditor*/}
+        {/*  editorDidMount={() => {*/}
+        {/*    setShowContent(false);*/}
+        {/*    // @ts-ignore*/}
+        {/*    window.MonacoEnvironment.getWorkerUrl = (*/}
+        {/*      _moduleId: string,*/}
+        {/*      label: string*/}
+        {/*    ) => {*/}
+        {/*      if (label === "json") return "_next/static/json.worker.js";*/}
+        {/*      if (label === "css") return "_next/static/css.worker.js";*/}
+        {/*      if (label === "html") return "_next/static/html.worker.js";*/}
+        {/*      if (label === "rust") return "_next/static/rust.worker.js";*/}
+        {/*      if (label === "sol") return "_next/static/sol.worker.js";*/}
+        {/*      if (label === "solidity")*/}
+        {/*        return "_next/static/solidity.worker.js";*/}
+        {/*      if (label === "typescript" || label === "javascript")*/}
+        {/*        return "_next/static/ts.worker.js";*/}
+        {/*      return "_next/static/editor.worker.js";*/}
+        {/*    };*/}
+        {/*  }}*/}
+        {/*  width="1000"*/}
+        {/*  height="600"*/}
+        {/*  language={selectedLanguage}*/}
+        {/*  theme="vs-dark"*/}
+        {/*  value={postBody}*/}
+        {/*  options={{*/}
+        {/*    minimap: {*/}
+        {/*      enabled: false,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*  onChange={setPostBody}*/}
+        {/*/>*/}
+        <Editor
+          height="90vh"
+          defaultLanguage="sol"
+          defaultValue="// some comment"
           theme="vs-dark"
+          language={selectedLanguage}
           value={postBody}
-          options={{
-            minimap: {
-              enabled: false,
-            },
-          }}
-          onChange={setPostBody}
+          onChange={callbackPostBody}
         />
+
         <div className="">
           <div id="terminal" className="w-3/4 h-full bg-black relative">
             {loading && (

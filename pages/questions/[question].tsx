@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getQuestion } from "../../constants/questions";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import dynamic from "next/dynamic";
-const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+// const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
 const Question = () => {
   const router = useRouter();
@@ -64,36 +64,36 @@ const Question = () => {
       </div>
 
       <div className="mt-4">
-        <MonacoEditor
-          editorDidMount={() => {
-            // @ts-ignore
-            window.MonacoEnvironment.getWorkerUrl = (
-              _moduleId: string,
-              label: string
-            ) => {
-              if (label === "json") return "_next/static/json.worker.js";
-              if (label === "css") return "_next/static/css.worker.js";
-              if (label === "html") return "_next/static/html.worker.js";
-              if (label === "rust") return "_next/static/rust.worker.js";
-              if (label === "solidity")
-                return "_next/static/solidity.worker.js";
-              if (label === "typescript" || label === "javascript")
-                return "_next/static/ts.worker.js";
-              return "_next/static/editor.worker.js";
-            };
-          }}
-          width="800"
-          height="600"
-          language={selectedLanguage}
-          theme="vs-dark"
-          value={postBody}
-          options={{
-            minimap: {
-              enabled: false,
-            },
-          }}
-          onChange={setPostBody}
-        />
+        {/*<MonacoEditor*/}
+        {/*  editorDidMount={() => {*/}
+        {/*    // @ts-ignore*/}
+        {/*    window.MonacoEnvironment.getWorkerUrl = (*/}
+        {/*      _moduleId: string,*/}
+        {/*      label: string*/}
+        {/*    ) => {*/}
+        {/*      if (label === "json") return "_next/static/json.worker.js";*/}
+        {/*      if (label === "css") return "_next/static/css.worker.js";*/}
+        {/*      if (label === "html") return "_next/static/html.worker.js";*/}
+        {/*      if (label === "rust") return "_next/static/rust.worker.js";*/}
+        {/*      if (label === "solidity")*/}
+        {/*        return "_next/static/solidity.worker.js";*/}
+        {/*      if (label === "typescript" || label === "javascript")*/}
+        {/*        return "_next/static/ts.worker.js";*/}
+        {/*      return "_next/static/editor.worker.js";*/}
+        {/*    };*/}
+        {/*  }}*/}
+        {/*  width="800"*/}
+        {/*  height="600"*/}
+        {/*  language={selectedLanguage}*/}
+        {/*  theme="vs-dark"*/}
+        {/*  value={postBody}*/}
+        {/*  options={{*/}
+        {/*    minimap: {*/}
+        {/*      enabled: false,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*  onChange={setPostBody}*/}
+        {/*/>*/}
       </div>
       <button className="bg-orange-500 mt-5 mb-5 hover:bg-orange-700 text-white font-bold py-2 px-4  border-orange-700 rounded">
         Submit
