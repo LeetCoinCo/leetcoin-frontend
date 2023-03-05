@@ -3,7 +3,6 @@ import { getQuestion } from "../../constants/questions";
 import "xterm/css/xterm.css";
 import Editor from "@monaco-editor/react";
 
-
 import dynamic from "next/dynamic";
 import * as monaco from "monaco-editor";
 // const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
@@ -15,14 +14,26 @@ const Question = () => {
     "// SPDX-License-Identifier: MIT \n // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0 \n pragma solidity ^0.8.17; \n contract HelloWorld { \n string public greet = 'Hello World!'; \n}"
   );
 
-  const callbackPostBody = (value: string | undefined, ev: monaco.editor.IModelContentChangedEvent) => {
+  const callbackPostBody = (
+    value: string | undefined,
+    ev: monaco.editor.IModelContentChangedEvent
+  ) => {
     if (value) {
       setPostBody(value);
     }
-  }
+  };
 
   const [selectedLanguage, setSelectedLanguage] = React.useState("sol");
-  const supportedLanguages = ["sol", "javascript", "typescript", "html", "css", "json", "rust", "markdown"];
+  const supportedLanguages = [
+    "sol",
+    "javascript",
+    "typescript",
+    "html",
+    "css",
+    "json",
+    "rust",
+    "markdown",
+  ];
   const [terminal, setTerminal] = useState(null);
   const [showTerminal, setShowTerminal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,7 +83,6 @@ const Question = () => {
       <div className="mb-5 bg-gray-100 px-4 sm:px-6 lg:px-8 rounded-lg w-1/2 pt-5 pb-5 mt-2">
         {question.Example}
       </div>
-
       <div className="mb-2">Select Language:</div>
       <div className="inline-block relative">
         <select
@@ -96,57 +106,31 @@ const Question = () => {
           </svg>
         </div>
       </div>
-
       <div className="mt-4 flex">
-      {/*  {showContent && (*/}
-      {/*    <div className="absolute inset-0 bg-white z-50">*/}
-      {/*      <div className="animate-pulse bg-gray-200 w-full h-full z-50"></div>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-        {/*<MonacoEditor*/}
-        {/*  editorDidMount={() => {*/}
-        {/*    setShowContent(false);*/}
-        {/*    // @ts-ignore*/}
-        {/*    window.MonacoEnvironment.getWorkerUrl = (*/}
-        {/*      _moduleId: string,*/}
-        {/*      label: string*/}
-        {/*    ) => {*/}
-        {/*      if (label === "json") return "_next/static/json.worker.js";*/}
-        {/*      if (label === "css") return "_next/static/css.worker.js";*/}
-        {/*      if (label === "html") return "_next/static/html.worker.js";*/}
-        {/*      if (label === "rust") return "_next/static/rust.worker.js";*/}
-        {/*      if (label === "sol") return "_next/static/sol.worker.js";*/}
-        {/*      if (label === "solidity")*/}
-        {/*        return "_next/static/solidity.worker.js";*/}
-        {/*      if (label === "typescript" || label === "javascript")*/}
-        {/*        return "_next/static/ts.worker.js";*/}
-        {/*      return "_next/static/editor.worker.js";*/}
-        {/*    };*/}
-        {/*  }}*/}
-        {/*  width="1000"*/}
-        {/*  height="600"*/}
-        {/*  language={selectedLanguage}*/}
-        {/*  theme="vs-dark"*/}
-        {/*  value={postBody}*/}
-        {/*  options={{*/}
-        {/*    minimap: {*/}
-        {/*      enabled: false,*/}
-        {/*    },*/}
-        {/*  }}*/}
-        {/*  onChange={setPostBody}*/}
-        {/*/>*/}
-        <Editor
-          height="90vh"
-          defaultLanguage="sol"
-          defaultValue="// some comment"
-          theme="vs-dark"
-          language={selectedLanguage}
-          value={postBody}
-          onChange={callbackPostBody}
-        />
-
-        <div className="">
-          <div id="terminal" className="w-3/4 h-full bg-black relative">
+        <div className="w-3/4 pr-4">
+          <div className="h-96 overflow-y-scroll border border-gray-300 rounded">
+            <Editor
+              height="100%"
+              defaultLanguage="sol"
+              defaultValue="// some comment"
+              theme="vs-dark"
+              language={selectedLanguage}
+              value={postBody}
+              onChange={callbackPostBody}
+            />
+          </div>
+          <button
+            className="bg-orange-500 mt-5 mb-5 hover:bg-orange-700 text-white font-bold py-2 px-4  border-orange-700 rounded"
+            onClick={handleTerminalSubmit}
+          >
+            Submit
+          </button>
+        </div>
+        <div className="w-1/4">
+          <div
+            id="terminal"
+            className="h-96 bg-black border border-gray-300 rounded relative"
+          >
             {loading && (
               <div className="absolute inset-0 flex justify-center items-center">
                 <svg
@@ -172,13 +156,6 @@ const Question = () => {
           </div>
         </div>
       </div>
-
-      <button
-        className="bg-orange-500 mt-5 mb-5 hover:bg-orange-700 text-white font-bold py-2 px-4  border-orange-700 rounded"
-        onClick={handleTerminalSubmit}
-      >
-        Submit
-      </button>
     </div>
   );
 };
