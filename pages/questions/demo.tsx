@@ -11,7 +11,7 @@ const Question = () => {
   // state
   const question = getQuestion("q1");
   const [postBody, setPostBody] = React.useState(
-    " // SPDX-License-Identifier: MIT \n // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0 \n pragma solidity ^0.8.0; \n contract TodoList { \n \t uint256 public taskCount = 0; \n \t struct Task { \n \t \t uint256 id; \n \t \t string content; \n \t \t bool completed; \n \t } \n \t mapping(uint256 => Task) public tasks; \n \t function createTask(string memory _content) public { \n \t \t taskCount++; \n \t \t tasks[taskCount] = Task(taskCount, _content, false); \n \t \t } \n } \n"
+    " // SPDX-License-Identifier: MIT \n // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0\n // DO NOT MODIFY the below 2 lines \n pragma solidity ^0.8.0; \n contract TodoList { function createTask(string memory _content) public { // TODO, add your code here } \n } \n"
   );
 
   const callbackPostBody = (
