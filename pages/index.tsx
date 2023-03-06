@@ -11,10 +11,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>LeetCoin</title>
+        <title>LeetCore</title>
         <meta
           name="description"
-          content="Level up your Web3 skills with LeetCoin"
+          content="Level up your Web3 skills with LeetCore"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
