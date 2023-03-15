@@ -9,11 +9,11 @@ export type QuestionId = "q1";
 
 const questions: { [key in QuestionId]: Question } = {
   q1: {
-    Title: "Solid Snake",
+    Title: "Todo List",
     Description:
-      "Your task is to write a function that will take in a sequence of moves that Solid Snake makes in a two-dimensional grid, represented by a string containing 'U' for up, 'D' for down, 'L' for left, and 'R' for right. The function should return the final position of Solid Snake after performing all the given moves. Solid Snake starts at position (0, 0) in the grid. The grid is a rectangular shape, and has a width of w and a height of h. If Solid Snake moves out of the grid, the function should return None. Solid Snake cannot move through walls.",
+      "Welcome to the world of Solidity and blockchain where even your daily to-do list needs to be secured! In this challenge, you will create a smart contract that allows you to add tasks to a to-do list on the blockchain. Your goal is to write a smart contract. The contract keeps track of the To-Do tasks of the user. The contract has only one function createTask that accepts To-Do task content. The createTask function keeps track of the amount of tasks and saves it. Your contract will be run against the test suites",
     Example:
-      "let result = final_position(5, 5, 'RUULDD'); assert_eq!(result, Some((2, 2)));",
+      "Input: createTask('Buy groceries'); Output: Task created: ID: 1 Content: 'Buy groceries' Completed: false",
     QuestionId: 1,
   },
 };

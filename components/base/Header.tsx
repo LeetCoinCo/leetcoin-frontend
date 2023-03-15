@@ -38,7 +38,7 @@ export default function Example() {
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                     alt="Your Company"
                   /> */}
-                  <h1 className="font-bold">LeetCoin</h1>
+                  <h1 className="font-bold">LeetCore</h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -60,12 +60,13 @@ export default function Example() {
                   </div>
                 </div>
               </div>
-              <a
-                className="block px-6 py-3 text-sm  hover:text-gray-800 font-bold border border-gray-300 hover:border-gray-400 rounded"
-                href="#"
+              <button
+                className="hover:cursor-not-allowed block px-6 py-3 text-sm  hover:text-gray-800 font-bold border border-gray-300 hover:border-gray-400 rounded"
+                // href="#"
+                disabled
               >
                 Connect Wallet
-              </a>
+              </button>
             </div>
           </div>
         </>

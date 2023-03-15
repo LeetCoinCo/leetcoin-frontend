@@ -7,7 +7,7 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col h-screen overflow-auto justify-between text-black bg-white ">
+    <div className="flex flex-col overflow-auto justify-between text-black bg-white ">
       <Header></Header>
       <>{children}</>
       <Footer></Footer>

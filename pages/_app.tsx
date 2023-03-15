@@ -9,8 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <React.Fragment>
       <Head>
         <title>Level Up Web3.</title>
-        <meta name="title" content="LeetCoin" />
-        <meta name="description" content="Enter LeetCode." />
+        <meta name="title" content="LeetCore" />
+        <meta name="description" content="Enter LeetCore." />
         <meta
           name="keywords"
           content="leetcode, leetcode for web3, leetcode for crypto, learn blockchain programming, blockchain, crypto, nft music video, ethereum"
