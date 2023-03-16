@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./types"],
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -19,6 +20,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/base/useOnboard.js",
+    "components/base/onboardWrapper.js"
+  ],
   "exclude": ["node_modules"]
 }

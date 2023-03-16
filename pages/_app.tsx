@@ -1,8 +1,9 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Layout } from "../components/base/Layout";
+import { OnboardProvider } from "components/base/OnboardContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,9 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <React.Fragment>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <OnboardProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </OnboardProvider>
       </React.Fragment>
     </React.Fragment>
   );
