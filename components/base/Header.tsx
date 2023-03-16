@@ -7,6 +7,7 @@ import { useContext } from "react";
 
 import jazzicon from "@metamask/jazzicon";
 import { useRef } from "react";
+import Link from "next/link";
 
 const navigation = [{ name: "Questions", href: "/", current: true }];
 
@@ -135,7 +136,7 @@ export default function Header() {
                       <div className="py-1">
                         <Menu.Item>
                           {({ active }) => (
-                            <a
+                            <Link
                               href="/profile"
                               className={classNames(
                                 active
@@ -145,7 +146,7 @@ export default function Header() {
                               )}
                             >
                               Profile
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>

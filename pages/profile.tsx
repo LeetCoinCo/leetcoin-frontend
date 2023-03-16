@@ -3,6 +3,7 @@ import jazzicon from "@metamask/jazzicon";
 import { animated, useSpring } from "react-spring";
 import { getQuestion } from "@/constants/questions";
 import router from "next/router";
+import Link from "next/link";
 
 interface ProfileProps {
   problemsAttempted: number[];
