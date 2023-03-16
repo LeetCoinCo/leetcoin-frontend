@@ -1,7 +1,7 @@
 import React from "react";
 import type { NextPage } from "next";
 import Table from "../components/questions/Table";
-import Question from "../pages/questions/demo";
+import Question from "../pages/questions/[question]";
 const Questions: NextPage = () => {
   // const questions = [
   //   //Two Sum, Reverse String, Single Number, Longest Common Prefix, Search Insert Position

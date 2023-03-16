@@ -1,50 +1,8 @@
-import NextLink from "next/link";
 import router from "next/router";
 
-const questions = [
-  //Two Sum, Reverse String, Single Number, Longest Common Prefix, Search Insert Position
-  {
-    number: 1,
-    title: "Solid Snake",
-    difficulty: "Easy",
-    frequency: 100,
-    rating: 4,
-    category: "Ink!",
-  },
-  {
-    number: 2,
-    title: "Solidus Snake",
-    difficulty: "Easy",
-    frequency: 90,
-    rating: 5,
-    category: "Ink!",
-  },
-  {
-    number: 3,
-    title: "Liquid Solid Snake",
-    difficulty: "Hard",
-    frequency: 50,
-    rating: 5,
-    category: "Ink!",
-  },
-  {
-    number: 4,
-    title: "Nomad Bridge",
-    difficulty: "Med",
-    frequency: 20,
-    rating: 3,
-    category: "Ink!",
-  },
-  {
-    number: 5,
-    title: "Not So Smart Contract",
-    difficulty: "Hard",
-    frequency: 10,
-    rating: 5,
-    category: "Ink!",
-  },
-  // More questions...
-];
+import { getQuestions } from "constants/questions";
+
+let questions = getQuestions();
 
 interface TableProps {
   rowData: any; // the rows of the table, this an array of JSX elements
@@ -52,7 +10,7 @@ interface TableProps {
 }
 
 export default function Table({ rowData, relativeLink }: TableProps) {
-  const handleSubmit = (value: any) => {
+  const handleSubmit = (value: number) => {
     console.log(value);
     router.push(`/questions/${value}`);
   };
@@ -118,44 +76,44 @@ export default function Table({ rowData, relativeLink }: TableProps) {
                   <tbody className="bg-white">
                     {questions.map((question, questionIdx) => (
                       <tr
-                        key={question.title}
+                        key={question.Title}
                         className={`hover:cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gray-50 duration-300  ${
                           questionIdx % 2 === 0 ? undefined : "bg-gray-100"
                         }`}
-                        onClick={() => handleSubmit(questionIdx)}
+                        onClick={() => handleSubmit(question.QuestionId)}
                       >
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium  sm:pl-6">
-                          {question.number}
+                          {question.QuestionId}
                         </td>
 
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium  sm:pl-6">
-                          {question.title}
+                          {question.Title}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm">
-                          {question.difficulty === "Easy" && (
+                          {question.Difficulty === "Easy" && (
                             <div className="bg-green-500 text-white font-bold py-2 px-4 w-16 rounded-full">
-                              {question.difficulty}
+                              {question.Difficulty}
                             </div>
                           )}
-                          {question.difficulty === "Med" && (
+                          {question.Difficulty === "Med" && (
                             <div className="bg-yellow-500 text-white font-bold py-2 px-4 w-16 rounded-full">
-                              {question.difficulty}
+                              {question.Difficulty}
                             </div>
                           )}
-                          {question.difficulty === "Hard" && (
+                          {question.Difficulty === "Hard" && (
                             <div className="bg-red-500 text-white font-bold py-2 px-4 w-16 rounded-full">
-                              {question.difficulty}
+                              {question.Difficulty}
                             </div>
                           )}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm ">
-                          {question.frequency}
+                          {question.Frequency}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm ">
-                          {question.rating}
+                          {question.Rating}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm ">
-                          {question.category}
+                          {question.Category}
                         </td>
                       </tr>
                     ))}

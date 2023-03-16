@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [{ name: "Questions", href: "#", current: true }];
+const navigation = [{ name: "Questions", href: "/", current: true }];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
