@@ -4,6 +4,7 @@ import { getQuestion } from "../../constants/questions";
 import "xterm/css/xterm.css";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
+import { get } from "http";
 // const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
 const Question = () => {
@@ -13,7 +14,7 @@ const Question = () => {
   const { question } = router.query;
   const questionObj = getQuestion(parseInt(question as string));
 
-  const [postBody, setPostBody] = React.useState(questionObj?.Stub);
+  const [postBody, setPostBody]: any = React.useState(questionObj?.Stub);
 
   const callbackPostBody = (
     value: string | undefined,
@@ -36,7 +37,7 @@ const Question = () => {
     "sol",
   ];
 
-  const [terminal, setTerminal] = useState(null);
+  const [terminal, setTerminal]: any = useState(null);
   const [showTerminal, setShowTerminal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currentLoadingMessage, setCurrentLoadingMessage] =
@@ -57,6 +58,8 @@ const Question = () => {
         fontSize: 14,
         fontFamily: 'Menlo, Monaco, Consolas, "Courier New", monospace',
         scrollback: 1000,
+        convertEol: true,
+
         // wrapMode: true, // add this line to enable text wrapping
       });
 
@@ -67,6 +70,7 @@ const Question = () => {
       fitAddon.fit();
 
       setTerminal(term);
+      // console.log("Terminal initialized:", term);
     };
 
     initTerminal();
@@ -81,48 +85,74 @@ const Question = () => {
     return normalizedStr;
   };
 
-  const handleTerminalSubmit = () => {
-    setLoading(true);
-    if (postBody) {
-      const base64Code = btoa(postBody);
+  const { Configuration, OpenAIApi } = require("openai");
 
-      fetch("https://leetcoin-backend.herokuapp.com/api/demo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code: base64Code,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setLoading(false);
-          setShowTerminal(true);
-          let out = "";
-          if ("rawOutput" in data) {
-            out = data.rawOutput;
-          } else if ("error" in data) {
-            out = data.error;
-          } else {
-            out = "error when submitting";
-          }
-          // @ts-ignore
-          let filtered: string = filterOutput(out);
-          console.log(filtered);
-          if (terminal) {
-            (terminal as any).write(filtered);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setLoading(false);
-        });
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+
+  const getResponse = async (text: string) => {
+    //TODO make context aware of description and example
+
+    const response = await fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "An error occurred");
     }
-    // Update loading message
-    setTimeout(() => setCurrentLoadingMessage("Initializing..."), 5000);
-    setTimeout(() => setCurrentLoadingMessage("Compiling..."), 10000);
-    setTimeout(() => setCurrentLoadingMessage("Running Tests..."), 17000);
+
+    return data.data;
+  };
+
+  const handleTerminalSubmit = async () => {
+    setLoading(true);
+    setCurrentLoadingMessage("Submitting...");
+    try {
+      if (terminal) {
+        let responseText = await getResponse(postBody);
+        const formattedText = await formatResponseText(responseText);
+        terminal.writeln(formattedText);
+      }
+      setLoading(false);
+      setShowTerminal(true);
+    } catch (error: any) {
+      setLoading(false);
+    }
+  };
+
+  const formatResponseText = (responseText: any) => {
+    let formattedText = responseText
+      .split("\n")
+      .map((line: any) => line.trim())
+      .join("\n")
+      .replace(/(\d+\.)/g, "\n$1")
+      .replace(/optimized/g, colorizeText("optimized", "orange"))
+      .replace(/Optimized/g, colorizeText("Optimized", "orange"))
+      .replace(/Optimize/g, colorizeText("Optimized", "orange"))
+      .replace(/error/g, colorizeText("error", "red"))
+      .replace(/Error/g, colorizeText("Error", "red"))
+      .replace(/errors/g, colorizeText("errors", "red"))
+      .replace(/Errors/g, colorizeText("Errors", "red"));
+
+    return formattedText;
+  };
+
+  const colorizeText = (text: any, color: any) => {
+    const colorCodes: any = {
+      red: "\x1b[31m",
+      orange: "\x1b[33m",
+      reset: "\x1b[0m",
+    };
+
+    return `${colorCodes[color]}${text}${colorCodes.reset}`;
   };
 
   return (
