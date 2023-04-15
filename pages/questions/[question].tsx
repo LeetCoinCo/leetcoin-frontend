@@ -165,14 +165,14 @@ const Question = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8">
       <div className="text-3xl font-bold mb-10"> {questionObj?.Title}</div>
       <div className="font-bold">Description:</div>
-      <div className="mb-5 bg-gray-100 px-4 sm:px-6 lg:px-8 rounded-lg w-1/2 pt-5 pb-5 mt-2">
+      <div className="mb-5 bg-gray-100 px-4 sm:px-6 lg:px-8 rounded-lg w-full sm:w-1/2 pt-5 pb-5 mt-2">
         {questionObj?.Description}
       </div>
       <div className="font-bold">Example:</div>
-      <div className="mb-5 bg-gray-100 px-4 sm:px-6 lg:px-8 rounded-lg w-1/2 pt-5 pb-5 mt-2">
+      <div className="mb-5 bg-gray-100 px-4 sm:px-6 lg:px-8 rounded-lg w-full sm:w-1/2 pt-5 pb-5 mt-2">
         {questionObj?.Example}
       </div>
       <div className="mb-2">Select Language:</div>
@@ -198,8 +198,8 @@ const Question = () => {
           </svg>
         </div>
       </div>
-      <div className="mt-4 flex">
-        <div className="w-3/5 pr-4">
+      <div className="mt-4 flex flex-col sm:flex-row">
+        <div className="w-full sm:w-3/5 pr-0 sm:pr-4 mb-4 sm:mb-0">
           <div className="h-96 overflow-y-scroll border border-gray-300 rounded resize overflow-auto">
             <Editor
               height="100%"
@@ -219,7 +219,7 @@ const Question = () => {
             {loading ? "Loading..." : "Submit"}
           </button>
         </div>
-        <div className="w-2/5">
+        <div className="w-full sm:w-2/5">
           <div
             id="terminal"
             className="h-96 resize overflow-auto bg-black border border-gray-300 rounded relative"
