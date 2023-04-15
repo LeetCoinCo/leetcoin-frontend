@@ -4,10 +4,10 @@ import { getQuestion } from "../../constants/questions";
 import "xterm/css/xterm.css";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import { get } from "http";
-// const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 import { recordProblemVisit } from "../../utils/recordProblemVisit";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import Image from "next/image";
+import loadingImg from "../../assets/kamon.gif";
 
 const Question = () => {
   // state
@@ -224,44 +224,17 @@ const Question = () => {
             id="terminal"
             className="h-96 resize overflow-auto bg-black border border-gray-300 rounded relative"
           >
-            {loading && (
+            {loading ? (
               <div className="absolute inset-0 flex justify-center items-center">
-                <svg
-                  className="animate-spin h-12 w-12 text-orange-500"
-                  viewBox="0 0 24 24"
-                >
-                  <defs>
-                    <linearGradient
-                      id="orange-gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#ff7f00" />
-                      <stop offset="50%" stopColor="#ffaf46" />
-                      <stop offset="100%" stopColor="#ffc97c" />
-                    </linearGradient>
-                  </defs>
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="url(#orange-gradient)"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647zM12 20a8 8 0 100-16 8 8 0 000 16zm8-7.938A7.962 7.962 0 0120 12h-4c0 3.042-1.135 5.824-3 7.938l3 2.647z"
-                  />
-                </svg>
-                <span className="ml-2 text-orange-500 animate-pulse">
-                  {currentLoadingMessage}
-                </span>
+                <Image
+                  src={loadingImg}
+                  width={200}
+                  height={200}
+                  className="rounded-full"
+                  alt="Loading"
+                />
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
