@@ -5,13 +5,15 @@ import "xterm/css/xterm.css";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 // const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+import { recordProblemVisit } from "../../utils/recordProblemVisit";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Question = () => {
   // state
-
   const router = useRouter();
   const { question } = router.query;
   const questionObj = getQuestion(parseInt(question as string));
+  const questionId = questionObj?.QuestionId;
 
   const [postBody, setPostBody] = React.useState(questionObj?.Stub);
 
@@ -45,6 +47,13 @@ const Question = () => {
   const handleLanguageChange = (e: any) => {
     setSelectedLanguage(e.target.value);
   };
+  const user = useUser();
+
+  useEffect(() => {
+    if (user) {
+      recordProblemVisit(user.id, questionId);
+    }
+  }, [user, questionId]);
 
   useEffect(() => {
     const initTerminal = async () => {

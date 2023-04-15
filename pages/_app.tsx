@@ -4,8 +4,20 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Layout } from "../components/base/Layout";
 import { OnboardProvider } from "components/base/OnboardContext";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
+import { createClient } from "@supabase/supabase-js";
+import supabaseClient from "../supabaseClient";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{
+  initialSession: Session;
+}>) {
+  // Create a new supabase browser client on every first render.
+  // const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
   return (
     <React.Fragment>
       <Head>
@@ -23,11 +35,16 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <React.Fragment>
-        <OnboardProvider>
+        {/* <OnboardProvider> */}
+        <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={pageProps.initialSession}
+        >
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </OnboardProvider>
+        </SessionContextProvider>
+        {/* </OnboardProvider> */}
       </React.Fragment>
     </React.Fragment>
   );

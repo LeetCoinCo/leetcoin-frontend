@@ -3,7 +3,8 @@ import jazzicon from "@metamask/jazzicon";
 import { animated, useSpring } from "react-spring";
 import { getQuestion } from "@/constants/questions";
 import router from "next/router";
-import Link from "next/link";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import supabase from "../supabaseClient";
 
 interface ProfileProps {
   problemsAttempted: number[];
@@ -11,18 +12,18 @@ interface ProfileProps {
   rank: string;
 }
 
-export const Profile: React.FC<ProfileProps> = ({
-  problemsAttempted = [1, 3, 6],
-  problemsCompleted = [2],
-  rank = "Degen Koder",
-}) => {
+export const Profile: React.FC<ProfileProps> = ({}) => {
   const animatedProps = useSpring({
     opacity: 1,
     from: { opacity: 0 },
     config: { duration: 500 },
   });
 
-  const [name, setName] = useState("John Doe");
+  const [name, setName] = useState("");
+  const [rank, setRank] = useState("");
+  const [problemsAttempted, setProblemsAttempted] = useState([]);
+  const [problemsCompleted, setProblemsCompleted] = useState([]);
+
   const [address, setAddress] = useState(
     "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
   );
@@ -42,6 +43,48 @@ export const Profile: React.FC<ProfileProps> = ({
     }
   }, [address]);
 
+  const user = useUser();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const id = user?.id;
+
+      let { data, error } = await supabase
+        .from("profiles")
+        .select("user_name, user_rank, problems_attempted, problems_completed")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("Error fetching user profile:", error);
+      } else {
+        setName(data?.user_name);
+        setRank(data?.user_rank);
+        setProblemsAttempted(data?.problems_attempted.problems);
+        setProblemsCompleted(data?.problems_completed.problems);
+      }
+    };
+
+    if (user) {
+      fetchProfile();
+    }
+  }, [user]);
+
+  const updateUserName = async (newName: string) => {
+    const id = user?.id;
+
+    if (id) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({ user_name: newName })
+        .eq("id", id);
+
+      if (error) {
+        console.error("Error updating user name:", error);
+      }
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <animated.div style={animatedProps} className="px-4 py-6 sm:px-0">
@@ -51,7 +94,10 @@ export const Profile: React.FC<ProfileProps> = ({
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                updateUserName(e.target.value);
+              }}
               className="border-2 border-gray-200 bg-slate-100 rounded-lg px-4 py-2 text-lg w-60 focus:border-blue-500 focus:outline-none"
             />
           </div>
