@@ -1,8 +1,7 @@
 import router from "next/router";
+import React, { useState } from "react";
 
 import { getQuestions } from "constants/questions";
-
-let questions = getQuestions();
 
 interface TableProps {
   rowData: any; // the rows of the table, this an array of JSX elements
@@ -14,6 +13,35 @@ export default function Table({ rowData, relativeLink }: TableProps) {
     console.log(value);
     router.push(`/questions/${value}`);
   };
+
+  let questions = getQuestions();
+  const [sortConfig, setSortConfig] = useState({
+    key: "QuestionId",
+    direction: "asc",
+  });
+  const requestSort = (key: any) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedQuestions = React.useMemo(() => {
+    let sortableQuestions = [...questions];
+    if (sortConfig.key) {
+      sortableQuestions.sort((a: any, b: any) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableQuestions;
+  }, [questions, sortConfig]);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 ">
@@ -37,44 +65,50 @@ export default function Table({ rowData, relativeLink }: TableProps) {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6"
+                        className="py-3.5 hover:cursor-pointer pl-4 pr-3 text-left text-sm font-semibold sm:pl-6 hover:cursor-pointer"
+                        onClick={() => requestSort("QuestionId")}
                       >
                         #
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6"
+                        className="py-3.5 hover:cursor-pointer pl-4 pr-3 text-left text-sm font-semibold sm:pl-6"
+                        onClick={() => requestSort("Title")}
                       >
                         Title
                       </th>
                       <th
                         scope="col"
-                        className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        className="hidden hover:cursor-pointer sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        onClick={() => requestSort("Difficulty")}
                       >
                         Difficulty
                       </th>
                       <th
                         scope="col"
-                        className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        className="hidden hover:cursor-pointer sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        onClick={() => requestSort("Frequency")}
                       >
                         Frequency
                       </th>
                       <th
                         scope="col"
-                        className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        className="hidden hover:cursor-pointer sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        onClick={() => requestSort("Rating")}
                       >
                         Rating
                       </th>
                       <th
                         scope="col"
-                        className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        className="hidden hover:cursor-pointer sm:table-cell px-3 py-3.5 text-left text-sm font-semibold "
+                        onClick={() => requestSort("Category")}
                       >
                         Category
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white">
-                    {questions.map((question, questionIdx) => (
+                    {sortedQuestions.map((question, questionIdx) => (
                       <tr
                         key={question.Title}
                         className={`hover:cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gray-50 duration-300  ${

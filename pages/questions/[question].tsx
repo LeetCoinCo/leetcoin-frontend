@@ -44,6 +44,32 @@ const Question = () => {
   const [loading, setLoading] = useState(false);
   const [currentLoadingMessage, setCurrentLoadingMessage] =
     useState("Loading...");
+  const [intervalId, setIntervalId]: any = useState(null);
+
+  const getRandomLoadingMessage = () => {
+    const messages = [
+      "Entangling qubits...",
+      "Mining from the blockchain...",
+      "Time traveling to fetch results...",
+      "Beaming up your code...",
+      "Uploading consciousness to the Metaverse...",
+      "Decrypting the matrix...",
+      "Taking the red pill...",
+      "Waking up the AI overlords...",
+      "Recharging the flux capacitor...",
+      "Brewing coffee for interstellar devs...",
+      "Gaining generalized intelligence...",
+      "Loading",
+      "Compiling",
+      "Loading",
+      "Compiling",
+      "Loading",
+      "Compiling",
+      "Optimizing",
+    ];
+
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
 
   const handleLanguageChange = (e: any) => {
     setSelectedLanguage(e.target.value);
@@ -55,6 +81,19 @@ const Question = () => {
       recordProblemVisit(user.id, questionId);
     }
   }, [user, questionId]);
+
+  useEffect(() => {
+    if (loading) {
+      const id: any = setInterval(() => {
+        setCurrentLoadingMessage(getRandomLoadingMessage());
+      }, 3000); // Change the message every 3 seconds
+      setIntervalId(id);
+    } else {
+      clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [loading]);
 
   useEffect(() => {
     const initTerminal = async () => {
@@ -123,7 +162,6 @@ const Question = () => {
 
   const handleTerminalSubmit = async () => {
     setLoading(true);
-    setCurrentLoadingMessage("Submitting...");
     try {
       if (terminal) {
         let responseText = await getResponse(postBody);
@@ -226,13 +264,19 @@ const Question = () => {
           >
             {loading ? (
               <div className="absolute inset-0 flex justify-center items-center">
-                <Image
-                  src={loadingImg}
-                  width={200}
-                  height={200}
-                  className="rounded-full"
-                  alt="Loading"
-                />
+                <div>
+                  {" "}
+                  <Image
+                    src={loadingImg}
+                    width={200}
+                    height={200}
+                    className="rounded-full"
+                    alt="Loading"
+                  />
+                  <div className="mt-4 text-white text-sm text-center">
+                    {currentLoadingMessage}
+                  </div>
+                </div>
               </div>
             ) : null}
           </div>
