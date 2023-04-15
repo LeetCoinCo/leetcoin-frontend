@@ -54,7 +54,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                     <Auth
                       supabaseClient={supabase}
                       appearance={{ theme: ThemeSupa }}
-                      providers={["google", "twitter", "github"]}
+                      providers={["google", "github", "discord"]}
                     />
                   </div>
                 </div>
